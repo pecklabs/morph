@@ -1,0 +1,54 @@
+name: Release (Windows)
+
+# Builds the Windows installers for the Tauri app and attaches them —
+# together with the Sparkle-style updater manifest `latest.json` — to the
+# GitHub release for the version. The macOS release (scripts/release.sh)
+# publishes the release first; this workflow then appends Windows artifacts
+# to that same release, so `releases/latest/download/latest.json`
+# (the updater endpoint in tauri.conf.json) always resolves.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to attach to (e.g. v0.1.0). Leave empty to create one from the app version."
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: apps/windows/pnpm-lock.yaml
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install frontend dependencies
+        working-directory: apps/windows
+        run: pnpm install --frozen-lockfile
+
+      - name: Build, sign, and publish updater artifacts
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          projectPath: apps/windows
+          tagName: ${{ github.event.release.tag_name || github.event.inputs.tag }}
+          releaseName: "Morph __VERSION__"
+          releaseDraft: false
+          prerelease: false
