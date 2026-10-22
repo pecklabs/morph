@@ -1,0 +1,76 @@
+/* Drop zone */
+"drop.title" = "Drop files to convert";
+"drop.subtitle" = "Images · PDF · CSV / TSV / JSON / Excel";
+"drop.choose" = "Choose Files…";
+"drop.privacy" = "Everything is converted on your Mac — nothing is uploaded.";
+"drop.overlay" = "Drop to add";
+
+/* Toolbar / menu */
+"action.addFiles" = "Add Files";
+"action.addFiles.menu" = "Add Files…";
+"action.checkForUpdates" = "Check for Updates…";
+"action.addFiles.help" = "Add files to convert (⌘O)";
+"action.clear" = "Clear";
+"action.clear.help" = "Remove all files";
+
+/* Options */
+"opt.quality" = "Quality";
+"opt.quality.help" = "Compression quality for JPEG, HEIC, and WebP output";
+"opt.resize" = "Resize";
+"opt.resize.help" = "Clamp the longest edge to this many pixels";
+"opt.pxMax" = "px max";
+"opt.pdfDpi" = "PDF DPI";
+"opt.pdfDpi.help" = "Render resolution when exporting PDF pages to images";
+
+/* Destination */
+"dest.sameFolder" = "Same folder as original";
+"dest.choose" = "Choose Folder…";
+"dest.help" = "Where converted files are saved";
+"dest.reveal" = "Reveal “%@” in Finder";
+
+/* Actions */
+"action.showInFinder" = "Show in Finder";
+"action.combine" = "Combine to PDF";
+"action.combine.help" = "Merge all images and PDFs into one PDF, in list order";
+"action.converting" = "Converting…";
+"action.convert.one" = "Convert %d file";
+"action.convert.many" = "Convert %d files";
+
+/* Status */
+"status.done" = "%d done";
+"status.failed" = "%d failed";
+"status.ready.one" = "%d file ready";
+"status.ready.many" = "%d files ready";
+"job.unsupported" = "Unsupported";
+"job.reveal.help" = "Show in Finder";
+"reorder.hint" = "Drag rows to reorder — convert and combine follow this order";
+
+/* Alert */
+"alert.failed.title" = "Couldn’t finish";
+"alert.ok" = "OK";
+
+/* Settings */
+"settings.section.general" = "General";
+"settings.language" = "Language";
+"settings.language.system" = "System";
+"settings.language.note" = "Changes apply immediately.";
+
+/* Modes */
+"mode.convert" = "Convert";
+"mode.makePDF" = "Make PDF";
+"drop.title.pdf" = "Drop images or PDFs to combine";
+"drop.subtitle.pdf" = "Images · PDF → one PDF";
+"action.createPDF" = "Create PDF…";
+"action.export" = "Export…";
+"makepdf.hint" = "Drag to set page order";
+"makepdf.excluded" = "Not added to PDF";
+"makepdf.pages.one" = "%d page";
+"makepdf.pages.many" = "%d pages";
+
+/* Open/Save panels */
+"panel.addFiles.message" = "Choose files to convert";
+"panel.chooseFolder.prompt" = "Choose";
+"panel.chooseFolder.message" = "Choose where converted files are saved";
+"panel.export.message" = "Choose a name and where to save";
+
+"preview.open" = "Click to preview";

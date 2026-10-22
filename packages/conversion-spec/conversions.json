@@ -1,0 +1,45 @@
+{
+  "$schema": "./conversions.schema.json",
+  "version": "0.1.0",
+  "description": "Single source of truth for Morph's conversion matrix. Consumed by the macOS (Swift) app and, later, the Windows (Tauri) app. Keep platform-specific availability notes here so both apps agree on capabilities.",
+  "categories": {
+    "image": {
+      "label": "Image",
+      "inputs": ["png", "jpg", "jpeg", "heic", "heif", "tiff", "tif", "gif", "bmp", "webp"],
+      "outputs": ["png", "jpg", "heic", "tiff", "gif", "bmp", "webp"],
+      "options": {
+        "quality": { "type": "float", "range": [0.0, 1.0], "default": 0.9, "appliesTo": ["jpg", "heic", "webp"] },
+        "maxDimension": { "type": "int", "nullable": true, "default": null, "note": "Longest edge in px; nil keeps original size" }
+      },
+      "notes": {
+        "macos": "Backed by Image I/O. Writable output types are queried at runtime via CGImageDestinationCopyTypeIdentifiers(); webp output requires macOS 14+.",
+        "windows": "Planned via the `image` crate; heic/webp may need extra system libraries."
+      }
+    },
+    "document": {
+      "label": "Document",
+      "conversions": [
+        { "from": ["png", "jpg", "jpeg", "heic", "tiff", "gif", "bmp", "webp"], "to": "pdf", "op": "imagesToPdf" },
+        { "from": ["pdf"], "to": "png", "op": "pdfToImages" },
+        { "from": ["pdf"], "to": "jpg", "op": "pdfToImages" }
+      ],
+      "options": {
+        "pdfDpi": { "type": "int", "default": 144, "appliesTo": ["pdfToImages"] },
+        "combineIntoSinglePdf": { "type": "bool", "default": false, "appliesTo": ["imagesToPdf"] }
+      },
+      "notes": {
+        "macos": "Backed by PDFKit + Core Graphics.",
+        "windows": "Planned via printpdf / pdfium."
+      }
+    },
+    "data": {
+      "label": "Data",
+      "inputs": ["csv", "tsv", "json", "xlsx"],
+      "outputs": ["csv", "tsv", "json", "xlsx"],
+      "notes": {
+        "macos": "CSV/TSV/JSON via Foundation. XLSX read/write implemented with NO external deps: a minimal ZIP (Compression for inflate, hand-rolled stored writer + CRC32) plus XMLParser for reading and inline-string XML for writing. First worksheet only; dates read as raw serial numbers for now.",
+        "windows": "Planned via csv / calamine / rust_xlsxwriter."
+      }
+    }
+  }
+}
